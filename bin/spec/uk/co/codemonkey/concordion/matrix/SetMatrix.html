@@ -1,0 +1,44 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion"
+      xmlns:cc="http://codemonkey.co.uk/concordion-extensions">
+  
+  <head>
+    <title>Tests for Matrix processing</title>
+  </head>  
+  <body>
+
+<h1>setMatrix</h1>
+<p>
+A setMatrix command interprets the instrumented table element as a 
+two-dimensional Object[][] and sets it to a temporary variable so that
+it can be referenced by another command. 
+</p>
+
+<div class="example">   
+  <p>Given an extension with <span c:execute="addExtension()"> setMatrix </span>is installed</p>
+  <p>The following instrumentation</p>
+  <pre class="html" c:execute="process(#TEXT)">
+  &lt;table myext:setMatrix="#matrix"&gt;
+    &lt;tr&gt;&lt;td&gt;a&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;c&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+  
+  &lt;span concordion:execute="printMatrix(#matrix)"&gt; print &lt;/span&gt; 
+  </pre>
+  
+  <p>Should call the method <code>printMatrix</code> with an array containing the following data</p>
+  <table c:execute="#val = valueAt(#r,#c)">
+    <tr>
+        <th c:set="#r">Row</th>
+        <th c:set="#c">Col</th>
+        <th c:assertEquals="#val">Value</th>
+    </tr>
+    <tr><td>0</td><td>0</td><td>a</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>c</td></tr>
+    <tr><td>1</td><td>1</td><td>2</td></tr>
+  </table>  
+</div>
+
+</body>
+</html>
+  

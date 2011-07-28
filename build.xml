@@ -1,0 +1,97 @@
+<project name="concordion" default="build" basedir=".">
+
+	<property name="version" value="0.1"/>
+	<property name="productName" value="concordion-extensions"/>
+
+	<property name="dir.build" value="${basedir}/target"/>
+	<property name="dir.test.output" value="${dir.build}/test-output"/>
+	<property name="dir.concordion.output" value="${dir.test.output}/concordion"/>
+
+	<property name="dir.src" value="${basedir}/src/main/java"/>
+	<property name="dir.test" value="${basedir}/src/test/java"/>
+	<property name="dir.classes.app" value="${dir.build}/classes/app"/>
+	<property name="dir.classes.test" value="${dir.build}/test-classes"/>
+	<property name="dir.dist" value="${basedir}/dist"/>
+
+	<path id="classpath.compile.app">
+		<fileset dir="lib" includes="*.jar" excludes="*-src.jar"/>
+	</path>
+	<path id="classpath.compile.test">		
+		<pathelement location="${dir.classes.app}"/>		
+		<path refid="classpath.compile.app"/>
+	</path>
+	
+	<target name="build" description="Builds everything from scratch"
+        depends="app.compile, test.compile, test.run, build.jar"
+    />
+
+
+	<target name="app.compile">
+		<property name="app.src.dir" location="${dir.src}" />
+		<mkdir dir="${dir.classes.app}" />
+		<javac destdir="${dir.classes.app}" srcdir="${app.src.dir}" classpathref="classpath.compile.app" includeantruntime="false" debug="on" />
+		<copy todir="${dir.classes.app}">
+			<fileset dir="src/main/resources" />
+		</copy>
+	</target>
+
+	<target name="test.compile" depends="app.compile">
+		<property name="test.src.dir" location="${dir.test}" />
+		<mkdir dir="${dir.classes.test}" />
+		<javac destdir="${dir.classes.test}" srcdir="${test.src.dir}" classpathref="classpath.compile.test" includeantruntime="false" debug="on" />
+		<copy todir="${dir.classes.test}">
+			<fileset dir="src/test/resources" />
+		</copy>
+	</target>
+
+	<target name="test.run" depends="test.compile">
+		<mkdir dir="${dir.test.output}"/>
+		<mkdir dir="${dir.concordion.output}"/>
+
+		<junit fork="yes" forkmode="once" printsummary="yes" haltonfailure="yes" showoutput="yes">
+			<jvmarg value="-Dconcordion.output.dir=${dir.concordion.output}"/>
+
+			<classpath>
+				<pathelement location="${dir.classes.test}"/>
+				<pathelement location="${dir.classes.app}"/>
+				<path refid="classpath.compile.app"/>
+			</classpath>
+
+			<formatter type="plain" />
+
+			<batchtest todir="${dir.test.output}">
+				<fileset dir="src/test/java">
+					<include name="**/*Test.java"/>
+					<exclude name="**/Abstract*"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="build.jar" depends="app.compile">
+        <mkdir dir="${dir.dist}"/>
+
+        <jar destfile="${dir.dist}/${productName}-${version}.jar"
+                basedir="${dir.classes.app}"
+                compress="false">
+        </jar>
+    </target>
+	
+    <target name="dist" depends="clean,clean.dist,build">
+    	<zip destfile="${dir.dist}/${productName}-${version}.zip" compress="true">
+            <zipfileset prefix="${productName}-${version}" dir=".">
+                <exclude name="target/**"/>
+                <exclude name=".*/**"/>
+            </zipfileset>
+        </zip>
+    </target>
+
+	<target name="clean">
+		<delete dir="${dir.build}" quiet="true" />
+	</target>
+	
+	<target name="clean.dist">
+		<delete dir="${dir.dist}" quiet="true" />
+	</target>
+	
+</project>

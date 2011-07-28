@@ -1,0 +1,33 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion"
+      xmlns:cc="http://codemonkey.co.uk/concordion-extensions">
+  
+  <head>
+    <title>Tests for Matrix processing</title>
+  </head>  
+  <body>
+
+<h1>assertMatrixEquals</h1>
+<p>
+The assertMatrixEquals command evaluates an expression and compares the resulting 
+Object[][] to the contents of the instrumented table element. The command reports 
+a success if the evaluation result is equal to the text in the document, or a failure 
+otherwise. The comparisons are case-sensitive.
+</p>
+
+<div class="example">   
+  <p>Given an extension with <span c:execute="addExtension()"><code>assertMatrixEquals</code></span> is installed</p>
+  <p>And a test fixture that returns an array of the form [[a,1][b,2]]</p>
+  <p>The following instrumentation</p>
+  <pre class="html" c:execute="#counts = process(#TEXT)">
+  &lt;table myext:assertMatrixEquals="printMatrix()"&gt;
+    &lt;tr&gt;&lt;td&gt;a&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;b&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+  </pre>
+  
+  <p>Should return a <span c:assertTrue="#counts.isSuccess()">successful</span> evaluation result</p>
+</div>
+
+</body>
+</html>
+  
