@@ -67,22 +67,24 @@
 
 		<java classname="uk.co.codemonkey.concordion.specLinker.SpecLinker">
 			<classpath>
+             <pathelement path="${java.class.path}"/>
 				<pathelement location="${dir.classes.app}" />
 				<path refid="classpath.compile.app" />
 			</classpath>
+			<arg value="${dir.test.output}"/>
+			<arg value="${dir.concordion.output}"/>
 		</java>
 
 		<fail message="Tests failed" if="tests.failed"/>
 	</target>
 
 	<target name="build.jar" depends="app.compile">
-		<mkdir dir="${dir.dist}" />
-
-		<jar destfile="${dir.dist}/${productName}-${version}.jar" basedir="${dir.classes.app}" compress="false">
-		</jar>
+		<jar destfile="${dir.build}/${productName}-${version}.jar" 
+                        basedir="${dir.classes.app}" compress="false"/>
 	</target>
 
 	<target name="dist" depends="clean,clean.dist,build">
+		<mkdir dir="${dir.dist}" />
 		<zip destfile="${dir.dist}/${productName}-${version}.zip" compress="true">
 			<zipfileset prefix="${productName}-${version}" dir=".">
 				<exclude name="target/**" />
