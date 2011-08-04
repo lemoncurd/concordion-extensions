@@ -1,0 +1,22 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+  <head>
+    <title>What about child specifications without indexes?</title>
+  </head>
+  <body>
+    <h1>What about child specifications without indexes?</h1>
+    <p>
+    Links to child specifications will be added to the nearest available
+    index. If no index exists for the current directory, a link will be
+    added to the parent index.
+    </p>
+  
+    <div class="example">
+      <p>Given a directory <code c:set="#dir">example</code> 
+         with files <code c:set="#index">Example.html</code> 
+         and <code c:set="#child">child/childDetails.html</code></p>
+      <p>When I run the <code c:execute="runLinker(#dir, #index, #child)">SpecLinker</code></p>
+      <p>Then <code>Example.html</code> will contain a link to <code c:assertTrue="fileHasLinkTo(#index, #TEXT)">child/childDetails.html</code></p>
+    </div> 
+  </body>
+
+</html>

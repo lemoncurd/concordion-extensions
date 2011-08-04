@@ -1,0 +1,27 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+  <head>
+    <title>Linking specifications together</title>
+  </head>
+  <body>
+    <h1>Linking specifications together</h1>
+    <p>
+    Once you have written all your specifications, the question
+    naturally arises, how do I navigate them? Concodion provides
+    breadcrumbs which help navigate back up a tree, but relies 
+    on manual links to provide further details. <code>SpecLinker</code> 
+    expands on breadcrumb format to automatically populate index
+    pages with links to their children, and highlight these links based
+    on the test results.
+    </p>
+  
+    <div class="example">
+      <p>Given a directory <code c:set="#dir">example</code> 
+         with files <code c:set="#index">Example.html</code> 
+         and <code c:set="#child">MoreExampleDetails.html</code></p>
+      <p>When I run the <code c:execute="runLinker(#dir, #index, #child)">SpecLinker</code></p>
+      <p>Then <code>Example.html</code> will be interpreted as an index 
+          and contain a link to <code c:assertTrue="fileHasLinkTo(#index, #TEXT)">MoreExampleDetails.html</code></p>
+    </div> 
+  </body>
+
+</html>

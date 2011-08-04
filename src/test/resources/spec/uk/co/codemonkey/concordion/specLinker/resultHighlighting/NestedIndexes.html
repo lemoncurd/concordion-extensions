@@ -1,0 +1,25 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+  <head>
+    <title>Are nested indexes highlighted?</title>
+  </head>
+  <body>
+    <h1>Are nested indexes highlighted?</h1>
+    <p>
+    When links are highlighted, if any tests below that index
+    in the tree have failures, the link will be marked as a failure.  
+    </p>
+    <div class="example">
+      <p>Given the following file structure:</p>
+      <table c:execute="specFile(#file)">
+        <tr><th c:set="#file">Filename</th></tr>
+        <tr><td>index.html</td></tr>
+        <tr><td>child/Child.html</td></tr>
+        <tr><td>child/failing.html</td></tr>
+      </table>
+      <p>When the specification <span c:set="#child">child/failing.html</span> <span c:execute="failSpec(#child)">fails</span></p>
+      <p>Then the link in the root index will have class: <span c:assertEquals="linkClass()">failure</span></p>
+    </div> 
+
+  </body>
+
+</html>

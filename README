@@ -1,9 +1,0 @@
-concordion-extensions provides some simple extensions to the Concordion (http://www.concordion.org) testing framework. Current extensions include:
-
-  setMatrix / assertMatrixEquals - to support the creation of concordion tests of functionality that work with data matricies.
-
-To find out more about the functions, take a look at the concordion tests:
-  src/test/resources/spec/
-
-To build the project, and run the tests:
-  ant

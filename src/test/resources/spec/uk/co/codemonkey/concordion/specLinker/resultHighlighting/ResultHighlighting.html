@@ -1,0 +1,30 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+  <head>
+    <title>Result Highlighting</title>
+  </head>
+  <body>
+    <h1>Result Highlighting</h1>
+    <p>
+    When the SpecLinker is given the location of the junit concordion
+    reports, it will set the link class based on the test results.
+    </p>
+    <div class="example">
+      <p>Given the following test results</p> 
+      <p>When I look at the generated index page</p>
+      <p>Then I will see a link annotated with class</p>
+	  <table c:execute="#result = linkClass(#passes,#fails)">
+<tr>
+	    <th c:set="#passes">Passes</th>
+	    <th c:set="#fails">Fails</th>
+	    <th c:assertEquals="#result">Expected Class</th>
+</tr>
+<tr><td>0</td><td>0</td><td>success</td></tr>
+<tr><td>1</td><td>0</td><td>success</td></tr>
+<tr><td>0</td><td>1</td><td>failure</td></tr>
+<tr><td>1</td><td>1</td><td>failure</td></tr>
+	  </table>
+    </div> 
+
+  </body>
+
+</html>

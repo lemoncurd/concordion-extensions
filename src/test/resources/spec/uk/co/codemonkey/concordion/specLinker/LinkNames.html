@@ -1,0 +1,27 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+  <head>
+    <title>How are link names determined?</title>
+  </head>
+  <body>
+    <h1>How are link names determined?</h1>
+    <p>
+    When a link is created, the anchor text will be populated with the
+    title text of the child page. If no title text exists, then the filename
+    will be used instead.
+    </p>
+  
+    <div class="example">
+      <p>Given a child page with title "<code c:set="#title">My Test Title</code>" called <code c:execute="addChild(#TEXT, #title)">MyChild.html</code></p> 
+      <p c:execute="runLinker()">When I look at the generated index page</p>
+      <p>Then I will see a link with text "<code c:assertTrue="fileHasLinkWithText(#TEXT)">My Test Title</code>"</p>
+    </div> 
+
+    <div class="example">
+      <p>Given a child page called <code c:execute="addChild(#TEXT)">MyChild.html</code> without a title.</p>
+      <p c:execute="runLinker()">When I look at the generated index page</p>
+      <p>Then I will see a link with text "<code c:assertTrue="fileHasLinkWithText(#TEXT)">MyChild.html</code>"</p>
+    </div> 
+
+  </body>
+
+</html>

@@ -1,29 +1,27 @@
 <project name="concordion" default="build" basedir=".">
 
-	<property name="version" value="0.1"/>
-	<property name="productName" value="concordion-extensions"/>
+	<property name="version" value="0.1" />
+	<property name="productName" value="concordion-extensions" />
 
-	<property name="dir.build" value="${basedir}/target"/>
-	<property name="dir.test.output" value="${dir.build}/test-output"/>
-	<property name="dir.concordion.output" value="${dir.test.output}/concordion"/>
+	<property name="dir.build" value="${basedir}/target" />
+	<property name="dir.test.output" value="${dir.build}/test-output" />
+	<property name="dir.concordion.output" value="${dir.test.output}/concordion" />
 
-	<property name="dir.src" value="${basedir}/src/main/java"/>
-	<property name="dir.test" value="${basedir}/src/test/java"/>
-	<property name="dir.classes.app" value="${dir.build}/classes/app"/>
-	<property name="dir.classes.test" value="${dir.build}/test-classes"/>
-	<property name="dir.dist" value="${basedir}/dist"/>
+	<property name="dir.src" value="${basedir}/src/main/java" />
+	<property name="dir.test" value="${basedir}/src/test/java" />
+	<property name="dir.classes.app" value="${dir.build}/classes/app" />
+	<property name="dir.classes.test" value="${dir.build}/test-classes" />
+	<property name="dir.dist" value="${basedir}/dist" />
 
 	<path id="classpath.compile.app">
-		<fileset dir="lib" includes="*.jar" excludes="*-src.jar"/>
+		<fileset dir="lib" includes="*.jar" excludes="*-src.jar" />
 	</path>
-	<path id="classpath.compile.test">		
-		<pathelement location="${dir.classes.app}"/>		
-		<path refid="classpath.compile.app"/>
+	<path id="classpath.compile.test">
+		<pathelement location="${dir.classes.app}" />
+		<path refid="classpath.compile.app" />
 	</path>
-	
-	<target name="build" description="Builds everything from scratch"
-        depends="app.compile, test.compile, test.run, build.jar"
-    />
+
+	<target name="build" description="Builds everything from scratch" depends="app.compile, test.compile, test.run, build.jar" />
 
 
 	<target name="app.compile">
@@ -45,53 +43,60 @@
 	</target>
 
 	<target name="test.run" depends="test.compile">
-		<mkdir dir="${dir.test.output}"/>
-		<mkdir dir="${dir.concordion.output}"/>
+		<mkdir dir="${dir.test.output}" />
+		<mkdir dir="${dir.concordion.output}" />
 
-		<junit fork="yes" forkmode="once" printsummary="yes" haltonfailure="yes" showoutput="yes">
-			<jvmarg value="-Dconcordion.output.dir=${dir.concordion.output}"/>
+		<junit fork="yes" forkmode="once" printsummary="yes" showoutput="yes" failureproperty="tests.failed">
+			<jvmarg value="-Dconcordion.output.dir=${dir.concordion.output}" />
 
 			<classpath>
-				<pathelement location="${dir.classes.test}"/>
-				<pathelement location="${dir.classes.app}"/>
-				<path refid="classpath.compile.app"/>
+				<pathelement location="${dir.classes.test}" />
+				<pathelement location="${dir.classes.app}" />
+				<path refid="classpath.compile.app" />
 			</classpath>
 
-			<formatter type="plain" />
+			<formatter type="xml" />
 
 			<batchtest todir="${dir.test.output}">
 				<fileset dir="src/test/java">
-					<include name="**/*Test.java"/>
-					<exclude name="**/Abstract*"/>
+					<include name="**/*Test.java" />
+					<exclude name="**/Abstract*" />
 				</fileset>
 			</batchtest>
 		</junit>
+
+		<java classname="uk.co.codemonkey.concordion.specLinker.SpecLinker">
+			<classpath>
+				<pathelement location="${dir.classes.app}" />
+				<path refid="classpath.compile.app" />
+			</classpath>
+		</java>
+
+		<fail message="Tests failed" if="tests.failed"/>
 	</target>
 
 	<target name="build.jar" depends="app.compile">
-        <mkdir dir="${dir.dist}"/>
+		<mkdir dir="${dir.dist}" />
 
-        <jar destfile="${dir.dist}/${productName}-${version}.jar"
-                basedir="${dir.classes.app}"
-                compress="false">
-        </jar>
-    </target>
-	
-    <target name="dist" depends="clean,clean.dist,build">
-    	<zip destfile="${dir.dist}/${productName}-${version}.zip" compress="true">
-            <zipfileset prefix="${productName}-${version}" dir=".">
-                <exclude name="target/**"/>
-                <exclude name=".*/**"/>
-            </zipfileset>
-        </zip>
-    </target>
+		<jar destfile="${dir.dist}/${productName}-${version}.jar" basedir="${dir.classes.app}" compress="false">
+		</jar>
+	</target>
+
+	<target name="dist" depends="clean,clean.dist,build">
+		<zip destfile="${dir.dist}/${productName}-${version}.zip" compress="true">
+			<zipfileset prefix="${productName}-${version}" dir=".">
+				<exclude name="target/**" />
+				<exclude name=".*/**" />
+			</zipfileset>
+		</zip>
+	</target>
 
 	<target name="clean">
 		<delete dir="${dir.build}" quiet="true" />
 	</target>
-	
+
 	<target name="clean.dist">
 		<delete dir="${dir.dist}" quiet="true" />
 	</target>
-	
+
 </project>
