@@ -2,7 +2,7 @@
       xmlns:cc="http://codemonkey.co.uk/concordion-extensions">
   
   <head>
-    <title>Tests for Matrix processing</title>
+    <title>setMatrix</title>
   </head>  
   <body>
 
@@ -17,12 +17,14 @@ it can be referenced by another command.
   <p>Given an extension with <span c:execute="addExtension()"> setMatrix </span>is installed</p>
   <p>The following instrumentation</p>
   <pre class="html" c:execute="process(#TEXT)">
-  &lt;table myext:setMatrix="#matrix"&gt;
-    &lt;tr&gt;&lt;td&gt;a&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;c&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
-  &lt;/table&gt;
+  <![CDATA[
+  <table myext:setMatrix="#matrix">
+    <tr><td>a</td><td>1</td></tr>
+    <tr><td>c</td><td>2</td></tr>
+  </table>
   
-  &lt;span concordion:execute="printMatrix(#matrix)"&gt; print &lt;/span&gt; 
+  <span concordion:execute="printMatrix(#matrix)"> print </span> 
+  ]]>
   </pre>
   
   <p>Should call the method <code>printMatrix</code> with an array containing the following data</p>
