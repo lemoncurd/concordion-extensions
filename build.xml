@@ -1,6 +1,6 @@
 <project name="concordion" default="build" basedir=".">
 
-	<property name="version" value="0.1" />
+	<property name="version" value="0.2" />
 	<property name="productName" value="concordion-extensions" />
 
 	<property name="dir.build" value="${basedir}/target" />
