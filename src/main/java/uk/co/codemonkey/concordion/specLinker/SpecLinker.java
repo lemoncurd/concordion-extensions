@@ -8,7 +8,7 @@ import java.nio.channels.FileChannel;
 
 public class SpecLinker {
 
-	private static final String DEFAULT_INDEX_HTML = "/defaultIndex.html";
+	private static final String DEFAULT_INDEX_HTML = "/specLinkerDefaultIndex.html";
 	private static final String ROOT_INDEX = "index.html";
 
 	public void link(String resultDirectory, String specDirectory) throws Exception{

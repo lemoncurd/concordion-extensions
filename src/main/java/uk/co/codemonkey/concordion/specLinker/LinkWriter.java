@@ -50,20 +50,11 @@ public class LinkWriter {
 
 	}
 	
-	private static class FileLink {
-		final File file;
-		final boolean isSuccess;
-		
-		public FileLink(File linkedFile, boolean passed) {
-			this.file = linkedFile;
-			this.isSuccess = passed;
-		}
-	}
-
 	public boolean addLinks(FileTreeNode fileTree) {
+		
 		JunitTestResults resultsFor = resultParser.resultsFor(fileTree.getFile().getPath());
 		boolean passed = resultsFor == null ? true : resultsFor.isSuccess();
-		
+
 		List<FileLink> links = new ArrayList<FileLink>();
 		List<FileTreeNode> children = fileTree.getChildren();
 		for(FileTreeNode child : children) {
@@ -99,7 +90,7 @@ public class LinkWriter {
 
 	private void appendLinks(Document indexDoc, File index, List<FileLink> links, Node body) throws Exception {
 		Element container= getLinksContainer(indexDoc, body);
-		container.appendChild(createTitle(indexDoc));
+		container.appendChild(createTitle(indexDoc, "Further Details"));
 		container.appendChild(createList(indexDoc, index, links));
 	}
 
@@ -136,9 +127,9 @@ public class LinkWriter {
 		return node;
 	}
 	
-	private Element createTitle(Document indexDoc) {
+	private Element createTitle(Document indexDoc, String docTitle) {
 		Element title = indexDoc.createElement("h3");
-		title.setTextContent("Further Details");
+		title.setTextContent(docTitle);
 		return title;
 	}
 
@@ -184,5 +175,14 @@ public class LinkWriter {
 		xformer.transform(new DOMSource(indexDoc), result);
 	}
 
+	private static class FileLink {
+		final File file;
+		final boolean isSuccess;
+		
+		public FileLink(File linkedFile, boolean passed) {
+			this.file = linkedFile;
+			this.isSuccess = passed;
+		}
+	}
 
 }

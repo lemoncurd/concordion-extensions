@@ -67,7 +67,7 @@
 
 		<java classname="uk.co.codemonkey.concordion.specLinker.SpecLinker">
 			<classpath>
-             <pathelement path="${java.class.path}"/>
+                <pathelement path="${java.class.path}"/>
 				<pathelement location="${dir.classes.app}" />
 				<path refid="classpath.compile.app" />
 			</classpath>
@@ -85,13 +85,23 @@
 
 	<target name="dist" depends="clean,clean.dist,build">
 		<mkdir dir="${dir.dist}" />
+		<copy todir="${dir.dist}" >
+			<fileset dir="target">
+				<include name="*.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="${dir.dist}/specs" >
+			<fileset dir = "${dir.concordion.output}" />
+		</copy>
 		<zip destfile="${dir.dist}/${productName}-${version}.zip" compress="true">
 			<zipfileset prefix="${productName}-${version}" dir=".">
 				<exclude name="target/**" />
 				<exclude name=".*/**" />
+				<exclude name="dist" />
 			</zipfileset>
 		</zip>
 	</target>
+	
 
 	<target name="clean">
 		<delete dir="${dir.build}" quiet="true" />

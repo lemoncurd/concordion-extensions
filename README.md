@@ -30,3 +30,13 @@ The project uses Ant for building. The default target will compile, run
 the tests and create a jar.
   
   ant
+  
+Roadmap
+-------
+
+0.3
++ SpecLinker - Prepend breadcrumb link to root index
++ SpecLinker - Add command line arg to set default index page
++ SpecLinker - Distinguish index links from test links?
++ SpecLinker - Optionally ignore link generation on certain pages?
+  
