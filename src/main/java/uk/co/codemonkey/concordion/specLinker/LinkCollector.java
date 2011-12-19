@@ -70,6 +70,10 @@ public class LinkCollector implements FileListener {
 			return children;
 		}
 		
+		@Override
+		public String toString() {
+			return file.toString();
+		}
 	}
 	
 }

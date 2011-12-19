@@ -1,0 +1,68 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+  <head>
+    <title>How do I run the specLinker?</title>
+  </head>
+  <body>
+    <h1>How do I run the specLinker?</h1>
+
+    <p>
+    Generating the links is as simple as running the SpecLinker
+    main class and passing it two arguments. The first argument
+    is the directory in which the junit test results are located,
+    the second is the directory in which the concordion results 
+    are located.
+    </p>
+
+    <div class="example">
+      <h3>Ant</h3>
+      <p>Simply add a java tag to your concordion test target:</p>
+      <pre>
+      <![CDATA[
+    <java classname="uk.co.codemonkey.concordion.specLinker.SpecLinker">
+        <classpath>
+            <path refid="classpath.test"/>
+        </classpath>
+        <arg value="${dir.test.output}"/>
+        <arg value="${dir.concordion.output}"/>
+    </java>]]>
+      </pre>
+    </div> 
+
+    <div class="example">
+      <h3>Maven</h3>
+      <p>The same can be achieved in Maven declaring the exec-maven-plugin after the surefire plugin in your pom.xml:</p>
+      <pre>
+      <![CDATA[
+       <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>exec-maven-plugin</artifactId>
+           <version>1.2</version>
+           <executions>
+               <execution>
+                   <phase>test</phase>
+                   <goals> <goal>java</goal> </goals>
+               </execution>
+           </executions>
+           <configuration>
+               <mainClass>uk.co.codemonkey.concordion.specLinker.SpecLinker</mainClass>
+               <classpathScope>test</classpathScope>
+               <arguments>
+                   <argument>${project.build.directory}/surefire-reports</argument>
+                   <argument>${project.build.directory}/concordion</argument>
+               </arguments>
+           </configuration>
+       </plugin>]]>
+      </pre>
+    </div> 
+
+    <h3>Unix and Windows paths are supported</h3>
+    <div class="example">
+    <p>
+    When specifying the specification directory, both Windows and Unix paths are supported. For example,
+    given a directory of <code c:set="#specs">example</code> within <code c:execute="createDir(#TEXT, #specs)">target</code>. I can specify 
+    <code c:assertTrue="runWithPath(#TEXT)">target/example</code> or
+    <code c:assertTrue="runWithPath(#TEXT)">target\example</code>
+    </p>
+    </div>
+  </body>
+</html>

@@ -34,9 +34,14 @@ the tests and create a jar.
 Roadmap
 -------
 
-0.3
-+ SpecLinker - Prepend breadcrumb link to root index
-+ SpecLinker - Add command line arg to set default index page
-+ SpecLinker - Distinguish index links from test links?
-+ SpecLinker - Optionally ignore link generation on certain pages?
-  
+### 0.3
+#### Bugs
+* SpecLinker - Default index page not be found when SpecLinker is run as a Maven test dependency
+* SpecLinker - Concordion CSS should be added to the generated index page
+
+#### Features
+* SpecLinker - Identify a strategy for dealing with ignored tests
+* SpecLinker - Prepend breadcrumb link to root index
+* SpecLinker - Add command line arg to set default index page
+* SpecLinker - Distinguish index links from test links?
+* SpecLinker - Optionally ignore link generation on certain pages?

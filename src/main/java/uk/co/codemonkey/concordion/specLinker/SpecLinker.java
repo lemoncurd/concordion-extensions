@@ -1,5 +1,7 @@
 package uk.co.codemonkey.concordion.specLinker;
 
+import static org.apache.commons.io.FilenameUtils.normalize;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

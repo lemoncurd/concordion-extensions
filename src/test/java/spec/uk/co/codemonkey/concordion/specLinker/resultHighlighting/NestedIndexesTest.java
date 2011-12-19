@@ -2,6 +2,7 @@ package spec.uk.co.codemonkey.concordion.specLinker.resultHighlighting;
 
 import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.createSpec;
 import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.createSpecDirectory;
+import static spec.uk.co.codemonkey.concordion.specLinker.resultHighlighting.ResultHighlightingHelper.writeJunitResults;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -51,17 +52,6 @@ public class NestedIndexesTest {
 			}
 		});
 		return container[0];
-	}
-
-	private void writeJunitResults(File dir, String testName, String passes, String fails) throws Exception {
-		int tests = Integer.parseInt(passes) + Integer.parseInt(fails);
-		
-		File file = new File(dir, "TEST-" + testName + ".xml");
-		FileWriter fileWriter = new FileWriter(file);
-		fileWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
-		fileWriter.write("<testsuite errors=\"0\" failures=\"" + fails + "\" hostname=\"local\" name=\"" + testName + "\" tests=\"" + tests + "\">");
-		fileWriter.write("</testsuite>");
-		fileWriter.close();
 	}
 	
 }

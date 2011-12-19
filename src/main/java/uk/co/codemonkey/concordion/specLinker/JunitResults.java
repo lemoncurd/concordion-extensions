@@ -1,15 +1,18 @@
 package uk.co.codemonkey.concordion.specLinker;
 
 import static java.lang.Integer.parseInt;
+import static org.apache.commons.io.FilenameUtils.normalize;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.filechooser.FileSystemView;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -30,11 +33,11 @@ public class JunitResults {
 		this.specDirectory = specDirectory;
 		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
 		docBuilder = dbfac.newDocumentBuilder();
-		populateResults(new File(resultDirectory));
+		populateResults(new File(normalize(resultDirectory, true)));
 	}
 	
-	public JunitTestResults resultsFor(String testName) {
-		return testResults.get(testName);
+	public JunitTestResults resultsFor(String testSpecFile) {
+		return testResults.get(testSpecFile);
 	}
 	
 	public JunitTestResults indexResults(String indexName) {
@@ -100,9 +103,9 @@ public class JunitResults {
 		}
 		
 		private String specFromTest(String testName) {
-			String filename = testName.replace('.', File.separatorChar);
+			String filename = testName.replace('.', '/');
 			filename = filename.replaceFirst("Test$", ".html");
-			return specDirectory + File.separator + filename;
+			return normalize(specDirectory + '/' + filename, true);
 		}
 
 		public boolean isSuccess() {
