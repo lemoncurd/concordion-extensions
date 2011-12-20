@@ -1,12 +1,16 @@
 package uk.co.codemonkey.concordion.specLinker;
 
-import static org.apache.commons.io.FilenameUtils.normalize;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
+import java.net.URL;
 import java.nio.channels.FileChannel;
+
+import org.apache.commons.io.IOUtils;
 
 public class SpecLinker {
 
@@ -14,7 +18,7 @@ public class SpecLinker {
 	private static final String ROOT_INDEX = "index.html";
 
 	public void link(String resultDirectory, String specDirectory) throws Exception{
-		File root = createRootIndexIfNecessary(specDirectory, ROOT_INDEX);
+		File root = createRootIndexIfNecessary(specDirectory);
 		
 		DirectoryWalker walker = new DirectoryWalker();	
 		LinkCollector collector = new LinkCollector(root);
@@ -25,28 +29,28 @@ public class SpecLinker {
 		writer.addLinks(collector.getFiles());
 	}
 
-	private File createRootIndexIfNecessary(String resultDirectory, String rootIndex) throws Exception {
-		File file = new File(resultDirectory,rootIndex);
+	private File createRootIndexIfNecessary(String resultDirectory) throws Exception {
+		File file = new File(resultDirectory,ROOT_INDEX);
 		if(!file.exists()) {
-			copyDefaultInto(file);
+			copyFile(this.getClass().getResource(DEFAULT_INDEX_HTML),file);
 		}
 		return file;
 	}
 
-	private void copyDefaultInto(File file) throws Exception {
-		FileChannel source= null;
-		FileChannel destination= null;
-		try {
-			URI indexURI = this.getClass().getResource(DEFAULT_INDEX_HTML).toURI();
-			source = new FileInputStream(new File(indexURI)).getChannel();
-		    destination = new FileOutputStream(file).getChannel();
-		    destination.transferFrom(source, 0, source.size());
-		}
-		finally {
-			if(source != null) source.close();
-			if(destination != null) destination.close();
-		}
-	}
+    private void copyFile(URL sourceUrl, File dest) throws IOException {
+    	if(!dest.exists()) {
+            dest.createNewFile();
+        }
+        InputStream in = sourceUrl.openStream();
+        OutputStream out = new FileOutputStream(dest);
+        try {
+        	IOUtils.copy(in,out);
+        }
+        finally {
+            if(in != null) { in.close(); }
+            if(out != null) { out.close(); }
+        }
+    }
 	
 	public static void main(String[] args) throws Exception {
 		SpecLinker specLinker = new SpecLinker();
