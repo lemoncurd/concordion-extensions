@@ -6,21 +6,19 @@
     <h1>How do I customise the root index page?</h1>
     <p>
     <code>SpecLinker</code> will automatically create a root index
-    page for the top level specifications. To use a different file 
-    as the index page, ensure exists at the root of the <code>SpecLinker</code> 
-    classpath as <code>specLinkerDefaultIndex.html</code>. <i>Note: this is
-    set to become more user friendly in the next release.</i>
+    page for the top level specifications. To provide a custom index 
+    page simply ensure <code>index.html</code> exists at the root of 
+    the concordion output directory.
     </p>
   
-   <!-- 
     <div class="example">
-      <p>Given a directory <code c:set="#dir">example</code> 
-         with files <code c:set="#index">Example.html</code> 
-         and <code c:set="#child">child/childDetails.html</code></p>
-      <p>When I run the <code c:execute="runLinker(#dir, #index, #child)">SpecLinker</code></p>
-      <p>Then <code>Example.html</code> will contain a link to <code c:assertTrue="fileHasLinkTo(#index, #TEXT)">child/childDetails.html</code></p>
+      <p>Given a custom <code c:set="#index">index.html</code>
+         already exists in the concordion output directory</p>
+      <p>When I run the <code c:execute="runLinker(#index)">SpecLinker</code></p>
+      <p>Then <span c:assertTrue="isSameIndexFile()">the given file</span> will 
+          <span c:assertTrue="containsChildLinks()">contain child links</span></p>
     </div> 
-    -->
+    
   </body>
 
 </html>

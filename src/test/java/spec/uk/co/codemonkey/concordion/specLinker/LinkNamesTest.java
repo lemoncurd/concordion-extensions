@@ -1,6 +1,6 @@
 package spec.uk.co.codemonkey.concordion.specLinker;
 
-import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.createSpec;
+import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.exampleSpec;
 import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.createSpecDirectory;
 import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.docContainsLink;
 import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.withText;
@@ -23,7 +23,7 @@ public class LinkNamesTest {
 	@Before
 	public void createExampleDirectory() throws Exception {
 		dir = createSpecDirectory("linkNames");		
-		createSpec(dir, INDEX, "index");
+		exampleSpec(dir, INDEX, "index");
 	}
 	
 	public void runLinker() throws Exception {
@@ -32,7 +32,7 @@ public class LinkNamesTest {
 	}
 
 	public void addChild(String name, String title) throws IOException {
-		createSpec(dir, name, title);		
+		exampleSpec(dir, name, title);		
 	}
 
 	public void addChild(String name) throws IOException {

@@ -14,11 +14,11 @@ import org.w3c.dom.NodeList;
 public class SpecTestHelper {
 
 	public static void createSpec(File parent, String child) throws IOException {
-		createSpec(parent, child, null);
+		exampleSpec(parent, child, null);
 	}
 	
-	public static void createSpec(File parent, String child, String title) throws IOException {
-		File file = new File(parent, child);
+	public static void exampleSpec(File parent, String name, String title) throws IOException {
+		File file = new File(parent, name);
 		if(!file.getParentFile().exists()) {
 			file.getParentFile().mkdirs();
 		}
