@@ -1,5 +1,6 @@
 package spec.uk.co.codemonkey.concordion.specLinker;
 
+import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.createSpec;
 import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.exampleSpec;
 import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.createSpecDirectory;
 import static spec.uk.co.codemonkey.concordion.specLinker.SpecTestHelper.docContainsLink;

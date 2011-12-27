@@ -1,0 +1,23 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+  <head>
+    <title>Breadcrumb Processing</title>
+  </head>
+  <body>
+    <h1>Breadcrumb Processing</h1>
+    <p>
+    In order to make navigation easier, <code>SpecLinker</code> will parse 
+    existing Concordion breadcrumbs in order to prepend a link to the root
+    index page. The link name will be equal to the title element in the index
+    page.
+    </p>
+  
+    <div class="example">
+      <p>Given a specification in <code c:execute="givenASpec(#TEXT)">tests/test1/test1.html</code></p>
+      <p c:execute="runLinker()">When I look at the processed specification page</p>
+      <p>Then I will see a the first breadcrumb link 
+         having text <code c:assertEquals="linkName()">Concordion Specifications</code>
+         and pointing to <code c:assertEquals="linkTarget()">../../index.html</code></p>
+    </div>
+     
+  </body>
+</html>

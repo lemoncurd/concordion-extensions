@@ -1,14 +1,11 @@
 package uk.co.codemonkey.concordion.specLinker;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
 import java.net.URL;
-import java.nio.channels.FileChannel;
 
 import org.apache.commons.io.IOUtils;
 
@@ -17,7 +14,7 @@ public class SpecLinker {
 	private static final String DEFAULT_INDEX_HTML = "/specLinkerDefaultIndex.html";
 	private static final String ROOT_INDEX = "index.html";
 
-	public void link(String resultDirectory, String specDirectory) throws Exception{
+	public File link(String resultDirectory, String specDirectory) throws Exception{
 		File root = createRootIndexIfNecessary(specDirectory);
 		
 		DirectoryWalker walker = new DirectoryWalker();	
@@ -27,6 +24,7 @@ public class SpecLinker {
 		JunitResults junitResults = new JunitResults(resultDirectory, specDirectory);
 		LinkWriter writer = new LinkWriter(junitResults);
 		writer.addLinks(collector.getFiles());
+		return root;
 	}
 
 	private File createRootIndexIfNecessary(String resultDirectory) throws Exception {
@@ -59,7 +57,8 @@ public class SpecLinker {
 			System.err.println(String.format("Usage: java %s <junit result directory> <concordion result directory>", SpecLinker.class.getCanonicalName()));			
 		}
 		
-		specLinker.link(args[0], args[1]);
+		File root = specLinker.link(args[0], args[1]);
+		System.out.println("Tests available at: " + root.getAbsolutePath());
 	}
 	
 }

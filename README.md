@@ -30,18 +30,20 @@ The project uses Ant for building. The default target will compile, run
 the tests and create a jar.
   
   ant
+
+Change Notes
+-------
+### 0.3
+* SpecLinker - Concordion generated breadcrumbs are prepended with a link to the root index page
+* SpecLinker - Fixed issue loading default index page when packaged as a JAR
+* SpecLinker - Fixed filepath separator handling when running Windows machines
+* SpecLinker - Added examples running with Maven and a simple build pom
   
 Roadmap
 -------
-
-### 0.3
-#### Bugs
-* SpecLinker - Default index page not be found when SpecLinker is run as a Maven test dependency
+### 0.4
+* SpecLinker - Optionally ignore link generation on certain pages
 * SpecLinker - Concordion CSS should be added to the generated index page
-
-#### Features
 * SpecLinker - Identify a strategy for dealing with ignored tests
-* SpecLinker - Prepend breadcrumb link to root index
-* SpecLinker - Add command line arg to set default index page
+* SpecLinker - Add command line argument to set default index page?
 * SpecLinker - Distinguish index links from test links?
-* SpecLinker - Optionally ignore link generation on certain pages?
