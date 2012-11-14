@@ -4,7 +4,7 @@
     <groupId>uk.co.codemonkey</groupId>
     <artifactId>concordion-extensions</artifactId>
     <packaging>jar</packaging>
-    <version>0.3</version>
+    <version>0.3.1</version>
     <build>
       <plugins>
 
@@ -22,6 +22,9 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.5</version>
           <configuration>
+            <includes>
+                <include>**/*Test.java</include>
+            </includes>
             <systemProperties>
               <property>
                 <name>concordion.output.dir</name>
