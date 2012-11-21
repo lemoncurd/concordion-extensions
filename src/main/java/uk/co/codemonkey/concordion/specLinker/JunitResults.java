@@ -2,6 +2,7 @@ package uk.co.codemonkey.concordion.specLinker;
 
 import static java.lang.Integer.parseInt;
 import static org.apache.commons.io.FilenameUtils.normalize;
+import static org.apache.commons.io.FilenameUtils.separatorsToSystem;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -105,7 +106,7 @@ public class JunitResults {
 		private String specFromTest(String testName) {
 			String filename = testName.replace('.', '/');
 			filename = filename.replaceFirst("Test$", ".html");
-			return normalize(specDirectory + '/' + filename, true);
+			return separatorsToSystem(normalize(specDirectory + '/' + filename, true));
 		}
 
 		public boolean isSuccess() {
